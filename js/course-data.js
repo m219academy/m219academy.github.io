@@ -257,6 +257,83 @@ export const paths = [
       "<h3>Wissenscheck: Master Your Data</h3><p>Du weisst nun, was ein Bundle enthält, wie Mapping funktioniert und wie Textfunktionen dynamische Inhalte verändern. Löse die <strong>10 Fragen</strong>, um dein Wissen zu überprüfen.</p><p>Mit <strong>mindestens 8 richtigen Antworten</strong> bestehst du. Die verdienten Punkte werden nur einmal gutgeschrieben. Danach wird der nächste Lernpfad freigeschaltet, sobald er verfügbar ist.</p>"
     ]
   ]
+},
+{
+  "title": "Smart Workflow Logic: Filter & Router",
+  "icon": "04",
+  "summary": "Steuere deinen Datenfluss mit Bedingungen, zwei Gmail-Routen und einer Fallback-Regel.",
+  "lessons": [
+    [
+      "Filter verstehen",
+      "Lerne, wie ein Filter entscheidet, ob Daten einen Weg weitergehen dürfen.",
+      "Eine Reklamation benötigt eine andere Rückmeldung als eine normale Anfrage.",
+      "Öffne in Make die Verbindung zwischen zwei Modulen und suche «Set up a filter».",
+      "Was bewirkt ein Filter?",
+      [
+        "Er prüft Bedingungen vor der Weitergabe",
+        "Er fügt immer ein neues Modul hinzu",
+        "Er meldet den Benutzer ab"
+      ],
+      0,
+      "<h3>Warum brauchen wir Filter?</h3><p>In unserem bisherigen Szenario hat Make für jede neue Tabellenzeile dieselbe Bestätigung versendet. In der Praxis müssen bestimmte Anfragen aber unterschiedlich behandelt werden. Ein <strong>Filter</strong> entscheidet anhand von Daten, ob ein Datensatz auf einer Verbindung weitergegeben wird.</p><p>Beispiel: Eine Anfrage mit dem Wort <strong>Reklamation</strong> soll eine andere E-Mail auslösen als eine gewöhnliche Produktanfrage.</p><figure class=\"lesson-figure\"><img src=\"./assets/images/lp4-filter-menu.png\" alt=\"Make-Screenshot: Über die Verbindung zwischen zwei Modulen gelangst du zu «Set up filter» und «Add router».\" loading=\"lazy\"><figcaption>Über die Verbindung zwischen zwei Modulen gelangst du zu «Set up filter» und «Add router».</figcaption></figure><h3>So funktioniert eine Bedingung</h3><p>Ein Filter vergleicht einen Wert, einen Operator und einen Vergleichstext. Bei <strong>Anfrage (C)</strong> + <strong>Contains</strong> + <strong>Reklamation</strong> wird nur ein Datensatz durchgelassen, dessen Anfrage diesen Ausdruck enthält. Ein nicht passender Datensatz wird auf diesem Weg nicht weiterverarbeitet.</p><div class=\"notice\"><strong>Merke</strong><p>Ein Filter verändert die Daten nicht. Er kontrolliert, ob der nächste Schritt ausgeführt werden soll.</p></div>"
+    ],
+    [
+      "Bedingungen und Operatoren",
+      "Verstehe Contains, Equal to und die Verknüpfungen AND/OR.",
+      "Contains (case insensitive) erkennt Reklamation, reklamation und REKLAMATION.",
+      "Vergleiche die Beispiele «Reklamation wegen Lieferung» und «Produktinformation».",
+      "Welche Einstellung erkennt auch «reklamation»?",
+      [
+        "Equal to mit Grossschreibung",
+        "Contains (case insensitive)",
+        "Text ist leer"
+      ],
+      1,
+      "<h3>Operatoren richtig wählen</h3><p>Mit <strong>Equal to</strong> prüfst du, ob ein Feld dem Vergleichswert entspricht. Mit <strong>Contains</strong> genügt es, dass der gesuchte Ausdruck innerhalb eines längeren Texts vorkommt. Die Option <strong>case insensitive</strong> ignoriert dabei Gross- und Kleinschreibung.</p><p>Für unsere Kundenanfragen ist «Contains (case insensitive)» sinnvoll. Auch die Anfrage «Reklamation wegen beschädigter Ware» soll erkannt werden, obwohl sie nicht exakt «Reklamation» lautet.</p><figure class=\"lesson-figure\"><img src=\"./assets/images/lp4-filter-reklamation.png\" alt=\"Make-Screenshot: Der Reklamationsfilter mit Anfrage (C), Contains (case insensitive) und Reklamation.\" loading=\"lazy\"><figcaption>Der Reklamationsfilter mit Anfrage (C), Contains (case insensitive) und Reklamation.</figcaption></figure><h3>AND und OR</h3><p>Bei <strong>AND</strong> müssen alle Bedingungen zutreffen, etwa «Anfrage enthält Reklamation» UND «E-Mail ist vorhanden». Bei <strong>OR</strong> reicht eine der Bedingungen, zum Beispiel «Anfrage enthält Reklamation» ODER «Anfrage enthält Beschwerde».</p><div class=\"task\"><strong>Gedankenübung</strong><p>Welche Kombination würdest du wählen, wenn sowohl Reklamationen als auch Beschwerden in denselben Bearbeitungspfad sollen?</p><p><strong>Lösung:</strong> OR.</p></div>"
+    ],
+    [
+      "Router und Fallback verstehen",
+      "Teile einen Datenfluss in mehrere Wege und lerne die Fallback-Route kennen.",
+      "Router: Reklamationen unten, gewöhnliche Anfragen oben.",
+      "Öffne das Kontextmenü einer Verbindung und verwende «Add router».",
+      "Was ist eine Fallback-Route?",
+      [
+        "Der Weg für Daten, die auf keine andere Route passen",
+        "Eine Kopie des gesamten Szenarios",
+        "Der erste Google-Sheets-Eintrag"
+      ],
+      0,
+      "<h3>Ein Workflow, mehrere Wege</h3><p>Ein <strong>Router</strong> erstellt mehrere Routen, auf denen die gleichen eingehenden Daten unterschiedlich verarbeitet werden können. Im Beispiel steht nach Google Sheets ein Router. Zwei Wege führen zu zwei unterschiedlichen Gmail-Modulen.</p><figure class=\"lesson-figure\"><img src=\"./assets/images/lp4-router.png\" alt=\"Make-Screenshot: Der Router wurde zwischen Google Sheets und Gmail eingefügt.\" loading=\"lazy\"><figcaption>Der Router wurde zwischen Google Sheets und Gmail eingefügt.</figcaption></figure><figure class=\"lesson-figure\"><img src=\"./assets/images/lp4-second-route.png\" alt=\"Make-Screenshot: Der zweite Weg führt zu einem weiteren Gmail-Modul.\" loading=\"lazy\"><figcaption>Der zweite Weg führt zu einem weiteren Gmail-Modul.</figcaption></figure><h3>Fallback statt doppelter Nachricht</h3><p>Unsere obere Route ist eine <strong>Fallback-Route</strong> mit der Bezeichnung «Normale Anfrage». Sie wird für Daten genutzt, die nicht auf die anderen Routen passen. Auf der unteren Route prüft ein Filter auf «Reklamation».</p><p>So können wir eine Reklamation anders beantworten als eine normale Anfrage. Wichtig ist, dass du die Fallback-Einstellung bewusst verwendest und nach dem Speichern beide Wege testest.</p><div class=\"notice\"><strong>Praxis-Tipp</strong><p>Ohne passende Bedingungen könnten mehrere Routen denselben Datensatz verarbeiten und mehrere E-Mails versenden. Prüfe deshalb die Regeln vor «Run once».</p></div>"
+    ],
+    [
+      "Praxis: Reklamationen automatisch erkennen",
+      "Baue den Router mit zwei Gmail-Modulen und überprüfe die Reklamationsroute.",
+      "«Reklamation wegen beschädigter Ware» wurde korrekt an die Reklamationsantwort weitergegeben.",
+      "Vergleiche die beiden Filter, ergänze einen Testeintrag und starte Run once.",
+      "Welche Route erhält «Reklamation wegen beschädigter Ware»?",
+      [
+        "Normale Anfrage (Fallback)",
+        "Reklamation",
+        "Keine Route"
+      ],
+      1,
+      "<h3>Unser Make-Szenario</h3><ol><li>Öffne «M219 Academy | Erste Automatisierung» und lasse das Scheduling während der Bearbeitung <strong>Inactive</strong>.</li><li>Öffne das Kontextmenü auf der Verbindung Google Sheets → Gmail und wähle <strong>Add router</strong>.</li><li>Erstelle einen zweiten Weg mit <strong>Gmail → Send an email</strong>.</li><li>Stelle beim normalen Gmail-Weg «Set the route as a fallback» auf <strong>Yes</strong>.</li><li>Stelle beim Reklamationsweg <strong>Fallback: No</strong> ein und prüfe <strong>Anfrage (C) → Contains (case insensitive) → Reklamation</strong>.</li><li>Verwende im zweiten Gmail-Modul als Betreff «Reklamation erhalten | M219 Academy» und mappe Empfänger, Name und Anfrage.</li></ol><figure class=\"lesson-figure\"><img src=\"./assets/images/lp4-filter-top.png\" alt=\"Make-Screenshot: Die obere Route wird als Fallback für gewöhnliche Anfragen eingestellt.\" loading=\"lazy\"><figcaption>Die obere Route wird als Fallback für gewöhnliche Anfragen eingestellt.</figcaption></figure><figure class=\"lesson-figure\"><img src=\"./assets/images/lp4-filter-reklamation.png\" alt=\"Make-Screenshot: Der untere Weg verwendet die Bedingung für Reklamationen.\" loading=\"lazy\"><figcaption>Der untere Weg verwendet die Bedingung für Reklamationen.</figcaption></figure><h3>Mit echten Testdaten prüfen</h3><p>Wir haben in Google Sheets einen neuen Testdatensatz mit «Test Person 3» und «Reklamation wegen beschädigter Ware» erstellt und das Szenario mit <strong>Run once</strong> ausgeführt.</p><figure class=\"lesson-figure\"><img src=\"./assets/images/lp4-sheet.png\" alt=\"Make-Screenshot: Der Testdatensatz mit der Reklamation in Google Sheets.\" loading=\"lazy\"><figcaption>Der Testdatensatz mit der Reklamation in Google Sheets.</figcaption></figure><figure class=\"lesson-figure\"><img src=\"./assets/images/lp4-mail-result.png\" alt=\"Make-Screenshot: Die Reklamations-E-Mail wurde erfolgreich zugestellt.\" loading=\"lazy\"><figcaption>Die Reklamations-E-Mail wurde erfolgreich zugestellt.</figcaption></figure><p>Damit ist der Reklamationszweig praktisch bestätigt. Die allgemeine Fallback-Route muss für einen vollständigen Funktionstest zusätzlich mit einer gewöhnlichen Anfrage geprüft werden. Das gezeigte Ergebnis stammt aus einem <strong>manuellen Run-once-Test</strong>.</p><div class=\"notice\"><strong>Fehlerbehebung</strong><p>Im Screenshot steht noch der Platzhalter «[NAME]» vor dem eingefügten Namen. Das ist ein Textfehler im Gmail-Modul, kein Fehler des Routers. Entferne den Platzhalter und speichere das Modul erneut.</p></div>"
+    ],
+    [
+      "Abschlussquiz: Workflow Navigator",
+      "Prüfe Filter, Router und Fallback anhand von zehn Fragen.",
+      "Bestanden mit mindestens 8 von 10 Antworten.",
+      "Löse den Wissenstest und schliesse LP4 ab.",
+      "Was bewirkt «Contains (case insensitive)»?",
+      [
+        "Es ignoriert die Gross- und Kleinschreibung bei der Suche",
+        "Es löscht alle E-Mails",
+        "Es startet die Zeitschaltung"
+      ],
+      0,
+      "<h3>Wissenscheck: Smart Workflow Logic</h3><p>Du kennst nun Filter, Textoperatoren, AND/OR, Router und die Fallback-Route. Bearbeite die <strong>10 Fragen</strong>. Ab <strong>8 richtigen Antworten</strong> ist LP4 bestanden.</p><p>Wiederholungen sind möglich, XP werden aber pro abgeschlossenem Wissenscheck und pro Lektion nur einmal gezählt.</p><p>Nach dem Abschluss wird LP5 freigeschaltet, sobald dessen Inhalte bereitstehen.</p>"
+    ]
+  ]
 }
 ];
 
@@ -535,6 +612,98 @@ export const finalQuestions = [
       "Automatische Ausführung für jedes zukünftige Ereignis"
     ],
     1
+  ]
+],
+[
+  [
+    "Was kontrolliert ein Filter?",
+    [
+      "Ob Daten unter bestimmten Bedingungen weitergehen",
+      "Ob das Profilbild sichtbar ist",
+      "Ob ein neues Konto erstellt wird"
+    ],
+    0
+  ],
+  [
+    "Was prüft «Contains»?",
+    [
+      "Ob ein Teiltext im Feld vorkommt",
+      "Ob Zahlen addiert werden",
+      "Ob eine Datei gelöscht wurde"
+    ],
+    0
+  ],
+  [
+    "Was bedeutet «case insensitive»?",
+    [
+      "Nur Grossbuchstaben",
+      "Gross- und Kleinschreibung wird ignoriert",
+      "Nur ein exakter Wortlaut"
+    ],
+    1
+  ],
+  [
+    "Was bedeutet AND?",
+    [
+      "Mindestens eine Bedingung",
+      "Alle verknüpften Bedingungen müssen wahr sein",
+      "Keine Bedingung gilt"
+    ],
+    1
+  ],
+  [
+    "Was bedeutet OR?",
+    [
+      "Eine der Bedingungen kann genügen",
+      "Alle Bedingungen sind immer falsch",
+      "Der Router wird gelöscht"
+    ],
+    0
+  ],
+  [
+    "Welche Aufgabe hat ein Router?",
+    [
+      "Datenflüsse auf mehrere Wege verteilen",
+      "Nur E-Mails speichern",
+      "Die Anmeldung verwalten"
+    ],
+    0
+  ],
+  [
+    "Wann wird die Fallback-Route verwendet?",
+    [
+      "Wenn keine der anderen Routen passt",
+      "Vor jeder Route ohne Ausnahme",
+      "Nur beim ersten Login"
+    ],
+    0
+  ],
+  [
+    "Welche Variable verwenden wir im Reklamationsfilter?",
+    [
+      "Name (A)",
+      "Anfrage (C)",
+      "E-Mail (B)"
+    ],
+    1
+  ],
+  [
+    "Welche Anfrage passt zum Reklamationsfilter?",
+    [
+      "Preisanfrage",
+      "Produktinformation",
+      "Reklamation wegen beschädigter Ware"
+    ],
+    2
+  ],
+  [
+    "Was belegt unser LP4-Test?",
+    [
+      "Eine erfolgreiche Run-once-Ausführung der Reklamationsroute",
+      "Die automatische Ausführung nach genau 15 Minuten",
+      "Den vollständigen Test beider Routen"
+    ],
+    0
   ]
 ]
 ];
