@@ -89,98 +89,282 @@ export const paths = [
         "<h3>Dein Abschlussquiz</h3><p>Du hast Make, die Oberfläche, Szenarien, Module und Trigger kennengelernt. Beantworte jetzt <strong>10 Fragen</strong>. Mit mindestens <strong>8 richtigen Antworten</strong> ist Lernpfad 1 abgeschlossen.</p><p>Das Quiz kannst du wiederholen. Die Abschluss-XP werden nur einmal vergeben.</p>"
       ]
     ]
+  },
+  {
+    "title": "Dein erster Workflow: Von Google Sheets zur E-Mail",
+    "icon": "02",
+    "summary": "Baue Schritt für Schritt eine Automatisierung, die neue Tabellenzeilen erkennt und eine persönliche Bestätigung versendet.",
+    "lessons": [
+      [
+        "Eine Automatisierung planen",
+        "Plane einen Ablauf: Neue Kundenanfrage in einer Tabelle führt zu einer Bestätigung per E-Mail.",
+        "Google Sheets erkennt neue Zeilen, Gmail versendet eine persönliche Bestätigung.",
+        "Zeichne den Ablauf Google Sheets → Gmail mit zwei Kästchen auf.",
+        "Was startet das Szenario?",
+        [
+          "Ein neuer Tabellen-Eintrag",
+          "Das Profilbild",
+          "Ein Kalenderdesign"
+        ],
+        0,
+        "<h3>Vom Problem zum Workflow</h3><p>Stell dir vor, neue Kundenanfragen landen in einer Tabelle. Jede Person soll eine Eingangsbestätigung erhalten. Ohne Automatisierung musst du die Adresse suchen, eine E-Mail formulieren und diese einzeln versenden. Bei vielen Anfragen ist das zeitaufwendig und fehleranfällig.</p><p>Wir bauen einen <strong>zweistufigen Workflow</strong>: Google Sheets überwacht neue Tabellenzeilen und Gmail verschickt einen passenden Text. Der erste Schritt ist ein <strong>Trigger</strong>, der zweite eine <strong>Action</strong>.</p><div class=\"notice\"><strong>Unser Ziel</strong><p>Wenn eine neue Zeile in «M219 Academy – Kundenanfragen» erscheint, soll der Empfänger automatisch eine Nachricht mit Namen und Anfrage erhalten.</p></div><h3>Welche Daten brauchen wir?</h3><p>Wir verwenden drei Spalten: <strong>Name</strong>, <strong>E-Mail</strong> und <strong>Anfrage</strong>. Name und Anfrage kommen später direkt in die Nachricht, E-Mail bestimmt den Empfänger.</p><figure class=\"lesson-figure\"><img src=\"./assets/images/lp2-builder.png\" loading=\"lazy\" alt=\"Der leere Scenario Builder: Hier startet deine erste Automatisierung.\"><figcaption>Der leere Scenario Builder: Hier startet deine erste Automatisierung.</figcaption></figure><h3>Bevor du beginnst</h3><p>Du benötigst ein Make-Konto, ein Google-Konto mit Google Sheets und die Möglichkeit, Gmail zu verbinden. Verwende für den Test deine eigene Adresse. Trage niemals zufällige oder fremde E-Mail-Adressen als Testempfänger ein.</p>"
+      ],
+      [
+        "Google Sheets vorbereiten",
+        "Lege eine Tabelle mit den Spalten Name, E-Mail und Anfrage an.",
+        "Die Kopfzeile muss die Feldnamen enthalten, damit Make die Spalten erkennt.",
+        "Erstelle in Google Sheets eine Datei «M219 Academy – Kundenanfragen» und die drei Spalten.",
+        "Welche Zeile enthält die Überschriften?",
+        [
+          "Zeile 1",
+          "Zeile 10",
+          "Die letzte Zeile"
+        ],
+        0,
+        "<h3>Die Datenquelle erstellen</h3><p>Öffne Google Sheets und erstelle eine neue Tabelle. Benenne sie <strong>M219 Academy – Kundenanfragen</strong>. Trage in Zeile 1 die Überschriften <strong>Name</strong>, <strong>E-Mail</strong>, <strong>Anfrage</strong> in die Spalten A, B und C ein.</p><p>Eine Kopfzeile ist wichtig: Sie hilft Make, Daten in späteren Modulen als benannte Felder anzubieten, statt dich nur mit anonymen Spalten arbeiten zu lassen.</p><figure class=\"lesson-figure\"><img src=\"./assets/images/lp2-sheet.png\" loading=\"lazy\" alt=\"Google Sheets mit den drei benötigten Spalten. Die Beispieladresse wurde für den öffentlichen Kurs verdeckt.\"><figcaption>Google Sheets mit den drei benötigten Spalten. Die Beispieladresse wurde für den öffentlichen Kurs verdeckt.</figcaption></figure><h3>Worauf solltest du achten?</h3><p>Die Blattbezeichnung kann beispielsweise «Tabellenblatt1» lauten. Achte auf Schreibweise und darauf, dass die drei Überschriften tatsächlich in A1 bis C1 liegen. Die Datei wird automatisch in Google Drive gespeichert.</p><div class=\"task\"><strong>Praxis-Tipp</strong><p>Für den ersten Test darfst du eine Beispielzeile vorbereiten. Verwende dabei eine E-Mail-Adresse, die dir gehört, damit niemand ungewollt angeschrieben wird.</p></div>"
+      ],
+      [
+        "Trigger einrichten: Watch New Rows",
+        "Verbinde Make mit Google Sheets und wähle die richtige Datei.",
+        "Watch New Rows überprüft neue Tabellenzeilen.",
+        "Konfiguriere Google Sheets → Watch New Rows und speichere das Modul.",
+        "Welches Modul überwacht neue Zeilen?",
+        [
+          "Add a Row",
+          "Watch New Rows",
+          "Send an Email"
+        ],
+        1,
+        "<h3>Das erste Modul hinzufügen</h3><p>Öffne dein Szenario und klicke auf das grosse <strong>Plus</strong>. Suche nach <strong>Google Sheets</strong> und wähle <strong>Watch New Rows</strong>. Du hast nun den Trigger hinzugefügt.</p><h3>Verbindung zu Google herstellen</h3><p>Klicke auf <strong>Create a connection</strong>, melde dich mit deinem Google-Konto an und erteile Make die angefragten Zugriffsrechte. Prüfe die Berechtigungen, bevor du bestätigst.</p><figure class=\"lesson-figure\"><img src=\"./assets/images/lp2-connection.png\" loading=\"lazy\" alt=\"Im Trigger richtest du eine Google-Sheets-Verbindung ein.\"><figcaption>Im Trigger richtest du eine Google-Sheets-Verbindung ein.</figcaption></figure><h3>Die richtigen Einstellungen</h3><ol><li><strong>Search Method:</strong> Search by path</li><li><strong>Drive:</strong> My Drive</li><li><strong>Spreadsheet ID:</strong> M219 Academy – Kundenanfragen</li><li><strong>Sheet Name:</strong> Tabellenblatt1 (oder dein tatsächlicher Blattname)</li><li><strong>Table contains headers:</strong> Yes</li><li><strong>Row with headers:</strong> A1:C1</li><li><strong>Limit:</strong> 2 für unseren Test</li></ol><figure class=\"lesson-figure\"><img src=\"./assets/images/lp2-trigger.png\" loading=\"lazy\" alt=\"Beispielkonfiguration mit Tabellenblatt1, Kopfzeile A1:C1 und Limit 2.\"><figcaption>Beispielkonfiguration mit Tabellenblatt1, Kopfzeile A1:C1 und Limit 2.</figcaption></figure><p><strong>Limit</strong> bedeutet: Wie viele neue Zeilen Make bei einer Ausführung höchstens verarbeitet. Es bestimmt nicht die Anzahl aller Zeilen in deiner Tabelle.</p><div class=\"notice\"><strong>Wichtig</strong><p>«Watch New Rows» ist ein Polling-Trigger. Die Ausführung kann später zeitgesteuert stattfinden. Das ist nicht dasselbe wie eine sofortige Benachrichtigung bei jeder Änderung.</p></div>"
+      ],
+      [
+        "Gmail und Mapping konfigurieren",
+        "Lass Gmail Daten aus Google Sheets als personalisierte E-Mail versenden.",
+        "Mapping überträgt dynamische Werte aus einem Modul in das nächste.",
+        "Erstelle Gmail → Send an email und mappe E-Mail (B), Name (A) und Anfrage (C).",
+        "Welches Feld gehört in «To»?",
+        [
+          "Name (A)",
+          "E-Mail (B)",
+          "Anfrage (C)"
+        ],
+        1,
+        "<h3>Ein zweites Modul verbinden</h3><p>Füge rechts neben Google Sheets ein weiteres Modul hinzu. Suche <strong>Gmail</strong> und wähle <strong>Send an email</strong>. Verbinde dein Gmail-Konto mit Make.</p><figure class=\"lesson-figure\"><img src=\"./assets/images/lp2-gmail.png\" loading=\"lazy\" alt=\"Gmail-Modul zur Einrichtung des automatischen E-Mail-Versands.\"><figcaption>Gmail-Modul zur Einrichtung des automatischen E-Mail-Versands.</figcaption></figure><h3>Was bedeutet Mapping?</h3><p>Ein Text wie «Hallo Max» wäre statisch und würde bei jeder Anfrage gleich bleiben. Beim <strong>Mapping</strong> übergibst du echte Werte aus der jeweiligen Tabellenzeile. Dadurch kann die Nachricht für jede Person anders aussehen.</p><ol><li>Unter <strong>To</strong> füge einen Empfänger hinzu und wähle aus Google Sheets das Feld <strong>E-Mail (B)</strong>.</li><li>Bei <strong>Subject</strong> verwende «Bestätigung deiner Anfrage | M219 Academy».</li><li>Bei <strong>Body type</strong> wähle <strong>Raw HTML</strong>.</li><li>Schreibe in <strong>Content</strong> eine kurze Eingangsbestätigung und füge die Variablen <strong>Name (A)</strong> und <strong>Anfrage (C)</strong> ein.</li></ol><figure class=\"lesson-figure\"><img src=\"./assets/images/lp2-mapping.png\" loading=\"lazy\" alt=\"Grüne Platzhalter sind dynamische Werte aus Google Sheets.\"><figcaption>Grüne Platzhalter sind dynamische Werte aus Google Sheets.</figcaption></figure><div class=\"notice\"><strong>Beispiel für den E-Mail-Text</strong><p>Hallo [Name], vielen Dank für deine Anfrage. Wir haben folgende Nachricht erhalten: [Anfrage]. Freundliche Grüsse, M219 Academy.</p><p>Ersetze die eckigen Platzhalter im Make-Editor durch die auswählbaren grünen Variablen. Schreibe sie nicht bloss als normalen Text!</p></div>"
+      ],
+      [
+        "Run once, Startpunkt und Scheduling",
+        "Teste den Workflow und verstehe den Unterschied zwischen einmaliger und automatischer Ausführung.",
+        "Run once führt einen manuellen Test aus; Active und ein Intervall konfigurieren den künftigen Betrieb.",
+        "Teste mit deiner eigenen E-Mail-Adresse und prüfe den Posteingang.",
+        "Was bedeutet «Run once»?",
+        [
+          "Ein einmaliger manueller Test",
+          "Dauerhaft aktivieren",
+          "Alle E-Mails löschen"
+        ],
+        0,
+        "<h3>Der erste Test</h3><p>Speichere beide Module und das Szenario. Lege in Google Sheets eine neue Zeile mit deinem Namen, deiner eigenen E-Mail-Adresse und einer Testanfrage an. Klicke in Make auf <strong>Run once</strong>.</p><h3>Choose where to start</h3><p>Bei der ersten Ausführung fragt Make, welche vorhandenen Zeilen berücksichtigt werden sollen. <strong>All</strong> kann bereits bestehende Zeilen verarbeiten. Verwende diese Einstellung nur, wenn alle enthaltenen Empfänger für den Test geeignet sind. Andernfalls lege den Startpunkt gezielt fest.</p><figure class=\"lesson-figure\"><img src=\"./assets/images/lp2-start.png\" loading=\"lazy\" alt=\"Make fragt nach dem Startpunkt der Verarbeitung.\"><figcaption>Make fragt nach dem Startpunkt der Verarbeitung.</figcaption></figure><h3>Erfolg kontrollieren</h3><p>Nach einem erfolgreichen Test zeigen die Module eine positive Ausführung an. Öffne anschliessend das Zielpostfach und prüfe, ob Name und Anfrage richtig übernommen wurden.</p><figure class=\"lesson-figure\"><img src=\"./assets/images/lp2-email.png\" loading=\"lazy\" alt=\"Ergebnis unseres manuellen Tests: Eine E-Mail wurde erfolgreich zugestellt. Persönliche Kontaktdaten sind verdeckt.\"><figcaption>Ergebnis unseres manuellen Tests: Eine E-Mail wurde erfolgreich zugestellt. Persönliche Kontaktdaten sind verdeckt.</figcaption></figure><h3>Automatisch ausführen</h3><p>Speichere das Szenario. Oben rechts lässt sich beispielsweise <strong>Every 15 minutes</strong> einstellen und der Schalter auf <strong>Active</strong> setzen. Danach kann Make den Trigger nach Zeitplan ausführen.</p><figure class=\"lesson-figure\"><img src=\"./assets/images/lp2-active.png\" loading=\"lazy\" alt=\"Aktiviertes Szenario mit einem Intervall von 15 Minuten.\"><figcaption>Aktiviertes Szenario mit einem Intervall von 15 Minuten.</figcaption></figure><div class=\"notice\"><strong>Was wurde wirklich geprüft?</strong><p>Der E-Mail-Versand wurde mit «Run once» erfolgreich getestet. Anschliessend wurde die geplante Ausführung aktiviert. Der automatische Versand nach dem 15-Minuten-Intervall wurde bei diesem Test nicht gesondert nachgewiesen.</p></div><p>Nach deinem Test kannst du das Szenario wieder deaktivieren, damit keine weiteren E-Mails unbeabsichtigt gesendet werden.</p>"
+      ],
+      [
+        "Abschlussquiz: Workflow Starter",
+        "Überprüfe dein Wissen und schliesse deine erste Automatisierung ab.",
+        "Du bestehst mit 8 von 10 richtigen Antworten.",
+        "Prüfe, ob du einen eigenen Test per Run once durchführen und das Ergebnis erklären kannst.",
+        "Welche Aktion sendet die Nachricht?",
+        [
+          "Google Sheets Watch New Rows",
+          "Gmail Send an email",
+          "Make Templates"
+        ],
+        1,
+        "<h3>Dein Praxisabschluss</h3><p>Du hast ein eigenes Szenario geplant, eine Tabelle vorbereitet, Google Sheets und Gmail verbunden, Felder gemappt und den Versand getestet. Jetzt kannst du zeigen, dass du die einzelnen Schritte wirklich verstanden hast.</p><p>Beantworte die zehn Fragen. Du brauchst mindestens <strong>8 richtige Antworten</strong>, um LP2 abzuschliessen und den nächsten Lernpfad freizuschalten. XP werden pro bestandener Aufgabe nur einmal gutgeschrieben.</p><div class=\"task\"><strong>Praktischer Nachweis</strong><p>Zeige dein Szenario mit den zwei verbundenen Modulen und erkläre, wie die Variablen aus der Tabelle in die E-Mail gelangen. Der Screenshot aus Make dient als Beleg für deinen eigenen Test.</p></div>"
+      ]
+    ]
   }
 ];
 export const finalQuestions = [
   [
-    "Was ist Make.com?",
     [
-      "Eine visuelle Automatisierungsplattform",
-      "Ein Betriebssystem",
-      "Ein Videospiel"
+      "Was ist Make.com?",
+      [
+        "Eine visuelle Automatisierungsplattform",
+        "Ein Betriebssystem",
+        "Ein Videospiel"
+      ],
+      0
     ],
-    0
+    [
+      "Wie hiess Make früher?",
+      [
+        "Zapier",
+        "Integromat",
+        "Power Apps"
+      ],
+      1
+    ],
+    [
+      "Was ist ein Szenario?",
+      [
+        "Ein Benutzerkonto",
+        "Der gesamte automatisierte Ablauf",
+        "Eine App"
+      ],
+      1
+    ],
+    [
+      "Was ist ein Modul?",
+      [
+        "Ein Arbeitsschritt im Szenario",
+        "Nur eine E-Mail-Adresse",
+        "Eine Browser-Erweiterung"
+      ],
+      0
+    ],
+    [
+      "Wofür dient ein Trigger?",
+      [
+        "Er verändert das Design",
+        "Er löst den Ablauf aus",
+        "Er löscht den Account"
+      ],
+      1
+    ],
+    [
+      "Welche Aufgabe erfüllt eine Action?",
+      [
+        "Sie führt einen Arbeitsschritt aus",
+        "Sie erstellt nur Passwörter",
+        "Sie benennt das Projekt"
+      ],
+      0
+    ],
+    [
+      "Wo erstellst du einen Workflow?",
+      [
+        "Im Szenario-Editor",
+        "Im Papierkorb",
+        "In der Kontoabrechnung"
+      ],
+      0
+    ],
+    [
+      "Wofür sind Templates nützlich?",
+      [
+        "Als fertige Vorlagen",
+        "Zum Löschen von Apps",
+        "Als Passwortmanager"
+      ],
+      0
+    ],
+    [
+      "Was macht ein Polling Trigger?",
+      [
+        "Er überprüft in Abständen auf neue Daten",
+        "Er macht Screenshots",
+        "Er versendet automatisch Rechnungen ohne Konfiguration"
+      ],
+      0
+    ],
+    [
+      "Welches Beispiel ist eine Automatisierung?",
+      [
+        "Jedes Mal manuell eine E-Mail schreiben",
+        "Neue Formularantwort automatisch in Tabelle speichern",
+        "Einmal einen Text lesen"
+      ],
+      1
+    ]
   ],
   [
-    "Wie hiess Make früher?",
     [
-      "Zapier",
-      "Integromat",
-      "Power Apps"
+      "Was ist unser Trigger?",
+      [
+        "Gmail Send an email",
+        "Google Sheets Watch New Rows",
+        "Ein Profilbild"
+      ],
+      1
     ],
-    1
-  ],
-  [
-    "Was ist ein Szenario?",
     [
-      "Ein Benutzerkonto",
-      "Der gesamte automatisierte Ablauf",
-      "Eine App"
+      "Welche Überschriften benötigt unser Beispiel?",
+      [
+        "Name, E-Mail, Anfrage",
+        "Nur Status",
+        "Preis und Rabatt"
+      ],
+      0
     ],
-    1
-  ],
-  [
-    "Was ist ein Modul?",
     [
-      "Ein Arbeitsschritt im Szenario",
-      "Nur eine E-Mail-Adresse",
-      "Eine Browser-Erweiterung"
+      "Was bedeutet A1:C1?",
+      [
+        "Die Kopfzeilen von Spalte A bis C",
+        "Alle Tabellen",
+        "Die letzten drei Zeilen"
+      ],
+      0
     ],
-    0
-  ],
-  [
-    "Wofür dient ein Trigger?",
     [
-      "Er verändert das Design",
-      "Er löst den Ablauf aus",
-      "Er löscht den Account"
+      "Was macht «Limit 2»?",
+      [
+        "Die Anzahl der maximal verarbeiteten Datensätze pro Ausführung begrenzen",
+        "Zwei Konten erstellen",
+        "Zwei Stunden warten"
+      ],
+      0
     ],
-    1
-  ],
-  [
-    "Welche Aufgabe erfüllt eine Action?",
     [
-      "Sie führt einen Arbeitsschritt aus",
-      "Sie erstellt nur Passwörter",
-      "Sie benennt das Projekt"
+      "In welches Feld wird E-Mail (B) gemappt?",
+      [
+        "Subject",
+        "To",
+        "Content type"
+      ],
+      1
     ],
-    0
-  ],
-  [
-    "Wo erstellst du einen Workflow?",
     [
-      "Im Szenario-Editor",
-      "Im Papierkorb",
-      "In der Kontoabrechnung"
+      "Was ist Mapping?",
+      [
+        "Eintragen einer festen Adresse",
+        "Weitergabe dynamischer Werte zwischen Modulen",
+        "Ändern der Benutzeroberfläche"
+      ],
+      1
     ],
-    0
-  ],
-  [
-    "Wofür sind Templates nützlich?",
     [
-      "Als fertige Vorlagen",
-      "Zum Löschen von Apps",
-      "Als Passwortmanager"
+      "Welche Variable wird für die Anrede benötigt?",
+      [
+        "Name (A)",
+        "Anfrage (C)",
+        "E-Mail (B)"
+      ],
+      0
     ],
-    0
-  ],
-  [
-    "Was macht ein Polling Trigger?",
     [
-      "Er überprüft in Abständen auf neue Daten",
-      "Er macht Screenshots",
-      "Er versendet automatisch Rechnungen ohne Konfiguration"
+      "Was macht Run once?",
+      [
+        "Führt das Szenario einmal testweise aus",
+        "Aktiviert ein Szenario für immer",
+        "Löscht die Tabelle"
+      ],
+      0
     ],
-    0
-  ],
-  [
-    "Welches Beispiel ist eine Automatisierung?",
     [
-      "Jedes Mal manuell eine E-Mail schreiben",
-      "Neue Formularantwort automatisch in Tabelle speichern",
-      "Einmal einen Text lesen"
+      "Wann kann «All» problematisch sein?",
+      [
+        "Wenn alte Zeilen unerwünschte Empfänger enthalten",
+        "Wenn das Bild zu gross ist",
+        "Wenn die Tabelle einen Titel hat"
+      ],
+      0
     ],
-    1
+    [
+      "Was wurde in unserem Test tatsächlich nachgewiesen?",
+      [
+        "Automatische Ausführung exakt nach 15 Minuten",
+        "Erfolgreicher manueller E-Mail-Versand mit Run once",
+        "Fehlerfreie Ausführung aller zukünftigen Läufe"
+      ],
+      1
+    ]
   ]
 ];
-
