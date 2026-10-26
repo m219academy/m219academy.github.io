@@ -17,7 +17,6 @@ export async function claimUsername(uid,raw,previous='') {
   if(!fresh.exists())tx.set(target,{uid});
   if(oldRef)tx.delete(oldRef);
   tx.set(doc(db,'users',uid),{username:name},{merge:true});
-  tx.set(doc(db,'publicProfiles',uid),{username:name},{merge:true});
  });
  return name;
 }
