@@ -180,8 +180,86 @@ export const paths = [
         "<h3>Dein Praxisabschluss</h3><p>Du hast ein eigenes Szenario geplant, eine Tabelle vorbereitet, Google Sheets und Gmail verbunden, Felder gemappt und den Versand getestet. Jetzt kannst du zeigen, dass du die einzelnen Schritte wirklich verstanden hast.</p><p>Beantworte die zehn Fragen. Du brauchst mindestens <strong>8 richtige Antworten</strong>, um LP2 abzuschliessen und den nächsten Lernpfad freizuschalten. XP werden pro bestandener Aufgabe nur einmal gutgeschrieben.</p><div class=\"task\"><strong>Praktischer Nachweis</strong><p>Zeige dein Szenario mit den zwei verbundenen Modulen und erkläre, wie die Variablen aus der Tabelle in die E-Mail gelangen. Der Screenshot aus Make dient als Beleg für deinen eigenen Test.</p></div>"
       ]
     ]
-  }
+  },
+{
+  "title": "Master Your Data: Mapping & Textfunktionen",
+  "icon": "03",
+  "summary": "Lerne Bundles kennen, mappe Werte und gestalte mit upper() und trim() dynamische E-Mails.",
+  "lessons": [
+    [
+      "Daten und Bundles verstehen",
+      "Entdecke, welche Daten ein Make-Modul nach einer Ausführung liefert.",
+      "Aus einer Tabellenzeile wird ein Bundle mit Name, E-Mail und Anfrage.",
+      "Öffne in Make nach Run once die Ausführungsdetails von Google Sheets und finde die drei Spaltenwerte.",
+      "Was ist ein Bundle in Make?",
+      [
+        "Eine Sammlung von ausgegebenen Werten",
+        "Ein neues Konto",
+        "Ein Google-Drive-Ordner"
+      ],
+      0,
+      "<h3>Was passiert mit deinen Tabellendaten?</h3><p>Beim Ausführen von <strong>Google Sheets → Watch New Rows</strong> liest Make neue Zeilen ein. Die erkannten Werte werden als strukturierte Daten an das nächste Modul weitergegeben. Eine einzelne ausgegebene Dateneinheit nennt Make <strong>Bundle</strong>.</p><p>Unser Test hat gezeigt: Ein Bundle kann beispielsweise <strong>Row number: 3</strong>, <strong>Name (A): Test Person 2</strong>, <strong>E-Mail (B)</strong> und <strong>Anfrage (C): Automatischer Test M219</strong> enthalten. Diese Werte sind keine fixen Texte für jede Ausführung. Sie hängen vom jeweiligen Tabelleninhalt ab.</p><figure class=\"lesson-figure\"><img src=\"./assets/images/lp3-panel.png\" alt=\"Mapping-Panel mit den Daten aus dem Google-Sheets-Bundle\" loading=\"lazy\"><figcaption>Ausgabewerte des Google-Sheets-Moduls im Mapping-Panel.</figcaption></figure><h3>Warum ist das wichtig?</h3><p>Jedes weitere Modul kann passende Werte aus einem vorherigen Schritt verwenden. So muss man den Namen oder die E-Mail-Adresse nicht für jede Kundenanfrage von Hand eintragen.</p><div class=\"notice\"><strong>Merke</strong><p>Das Modul führt eine Aufgabe aus. Das Bundle enthält die Daten, die bei dieser Ausführung zurückkommen. Eine Ausführung kann je nach Trigger auch mehrere Bundles verarbeiten.</p></div>"
+    ],
+    [
+      "Mapping gezielt einsetzen",
+      "Ordne Daten aus Google Sheets den richtigen Feldern in Gmail zu.",
+      "Name (A) wird zur Anrede, E-Mail (B) zum Empfänger, Anfrage (C) zur Nachricht.",
+      "Öffne Gmail → Send an email und kontrolliere die drei grünen Variablen.",
+      "Welche Spalte gehört in das Empfängerfeld «To»?",
+      [
+        "Anfrage (C)",
+        "E-Mail (B)",
+        "Name (A)"
+      ],
+      1,
+      "<h3>Feste Texte oder dynamische Werte?</h3><p>In einem Gmail-Modul kannst du einen festen Text wie «Vielen Dank für deine Anfrage» schreiben. Du kannst aber auch einen Wert aus Google Sheets einfügen. Das heisst <strong>Mapping</strong>. Im Editor erscheinen die gemappten Werte als farbige Variablen.</p><p>Im Feld <strong>To</strong> gehört <strong>E-Mail (B)</strong>. Im Begrüssungstext setzt du <strong>Name (A)</strong> ein. Den Inhalt der Anfrage übernimmst du aus <strong>Anfrage (C)</strong>. Bei einer neuen Tabellenzeile verwendet Make automatisch die Daten dieser Zeile.</p><figure class=\"lesson-figure\"><img src=\"./assets/images/lp3-subject.png\" alt=\"Gmail-Subject mit dynamischer Variable Name (A)\" loading=\"lazy\"><figcaption>Die grüne Variable Name (A) stammt aus Google Sheets.</figcaption></figure><h3>Ein häufiger Fehler</h3><p>Wenn du statt einer Variable einen Namen wie «Test Person 2» direkt eintippst, steht derselbe Name in jeder verschickten Nachricht. Achte deshalb darauf, echte Mapping-Tokens zu verwenden.</p><div class=\"task\"><strong>Praxis-Check</strong><p>Zeige im Szenario auf die Variablen für Name, E-Mail und Anfrage. Erkläre laut, warum genau diese Zuordnung sinnvoll ist.</p></div>"
+    ],
+    [
+      "Textfunktionen: upper und trim",
+      "Formatiere eingehende Texte, bevor du sie weiterverwendest.",
+      "upper(max mustermann) ergibt MAX MUSTERMANN. trim entfernt überflüssige Leerzeichen am Anfang und Ende.",
+      "Ersetze im Subject die einfache Namensvariable durch upper(Name (A)).",
+      "Was ergibt upper(\"max mustermann\")?",
+      [
+        "Max Mustermann",
+        "MAX MUSTERMANN",
+        "max mustermann"
+      ],
+      1,
+      "<h3>Texte automatisch bearbeiten</h3><p>Mit Funktionen kann Make Werte vor dem Weitergeben verändern. Eine Textfunktion nimmt einen Eingabewert entgegen und liefert einen bearbeiteten Wert zurück. Die ursprüngliche Zelle in Google Sheets wird dadurch <strong>nicht</strong> geändert.</p><h3>upper()</h3><p>Die Funktion <strong>upper()</strong> verwandelt Buchstaben in Grossbuchstaben. Öffne das Mapping-Menü, wähle den Bereich mit dem Buchstaben <strong>A</strong> und füge <strong>upper</strong> hinzu. Setze die grüne Variable <strong>Name (A)</strong> zwischen die Klammern.</p><figure class=\"lesson-figure\"><img src=\"./assets/images/lp3-functions.png\" alt=\"Textfunktionen in Make mit upper und trim\" loading=\"lazy\"><figcaption>Im Menü Textfunktionen findest du upper und trim.</figcaption></figure><figure class=\"lesson-figure\"><img src=\"./assets/images/lp3-upper.png\" alt=\"Make Gmail Subject mit upper und dynamischer Namensvariable\" loading=\"lazy\"><figcaption>upper(Name (A)) im Betreff: Der Name wird erst bei der Ausführung umgewandelt.</figcaption></figure><h3>trim()</h3><p>Mit <strong>trim()</strong> entfernst du überflüssige Leerzeichen am Anfang und Ende eines Texts. Beispiel: Aus «  Max  » wird «Max». Die Funktion eignet sich für Formulareingaben, die Benutzer versehentlich mit Leerzeichen absenden.</p><div class=\"notice\"><strong>Wichtig</strong><p>upper() und trim() betreffen nur das Feld, in dem du sie verwendest. Andere gemappte Felder bleiben unverändert.</p></div>"
+    ],
+    [
+      "Dynamische E-Mails testen",
+      "Prüfe, ob Make die richtigen Daten in Betreff und Nachricht ausgibt.",
+      "Der Testeintrag max mustermann wurde im Betreff zu MAX MUSTERMANN, im E-Mail-Text blieb er unverändert.",
+      "Ergänze einen Testeintrag mit deiner eigenen E-Mail-Adresse, starte Run once und kontrolliere den Betreff.",
+      "Warum bleibt der Name im E-Mail-Text klein geschrieben?",
+      [
+        "Weil upper() nur im Subject verwendet wird",
+        "Weil Gmail keine Grossbuchstaben kann",
+        "Weil Google Sheets alles rückgängig macht"
+      ],
+      0,
+      "<h3>Vom Tabellenwert zum fertigen Betreff</h3><p>Für unseren Test stand in Google Sheets der Name <strong>max mustermann</strong> und als Anfrage <strong>Mapping test</strong>. Im Gmail-Modul haben wir den Betreff aus festen Textteilen und <strong>upper(Name (A))</strong> zusammengesetzt.</p><figure class=\"lesson-figure\"><img src=\"./assets/images/lp3-sheet.png\" alt=\"Google Sheet mit Testzeile max mustermann und Mapping test\" loading=\"lazy\"><figcaption>Die Testdaten in Google Sheets: ein neuer Name und eine neue Anfrage.</figcaption></figure><h3>Ausführung kontrollieren</h3><ol><li>Speichere das Gmail-Modul und das Szenario.</li><li>Füge einen neuen Testeintrag mit einer E-Mail-Adresse ein, die du selbst kontrollierst.</li><li>Starte <strong>Run once</strong>.</li><li>Prüfe die Ausführung beider Module und die empfangene Nachricht.</li><li>Vergleiche den Namen im Betreff mit dem Namen im Nachrichtentext.</li></ol><figure class=\"lesson-figure\"><img src=\"./assets/images/lp3-result.png\" alt=\"Erhaltene E-Mail mit MAX MUSTERMANN im Betreff und max mustermann im Text\" loading=\"lazy\"><figcaption>Erfolgreicher Praxistest: upper() verändert den Betreff, nicht den Nachrichtentext.</figcaption></figure><h3>Was beweist dieser Test?</h3><p>Wir haben einen <strong>manuellen Test mit Run once</strong> erfolgreich durchgeführt. Der Betreff enthielt den umgewandelten Namen, und die Nachricht wurde zugestellt. Das ist kein Nachweis, dass der zeitgesteuerte Ablauf bereits nach 15 Minuten automatisch ausgeführt wurde.</p><div class=\"task\"><strong>Selbstkontrolle</strong><p>Kannst du sagen, welches Feld dynamisch ist, welcher Ausdruck den Wert bearbeitet und wie du das Ergebnis nachprüfst?</p></div>"
+    ],
+    [
+      "Abschlussquiz: Data Explorer",
+      "Prüfe Bundles, Mapping und Textfunktionen.",
+      "Zehn Fragen. Ab acht richtigen Antworten gilt LP3 als abgeschlossen.",
+      "Bestehe den Test, um LP4 freizuschalten.",
+      "Was macht trim()?",
+      [
+        "Es entfernt überflüssige Rand-Leerzeichen",
+        "Es macht den Text fett",
+        "Es sendet eine E-Mail"
+      ],
+      0,
+      "<h3>Wissenscheck: Master Your Data</h3><p>Du weisst nun, was ein Bundle enthält, wie Mapping funktioniert und wie Textfunktionen dynamische Inhalte verändern. Löse die <strong>10 Fragen</strong>, um dein Wissen zu überprüfen.</p><p>Mit <strong>mindestens 8 richtigen Antworten</strong> bestehst du. Die verdienten Punkte werden nur einmal gutgeschrieben. Danach wird der nächste Lernpfad freigeschaltet, sobald er verfügbar ist.</p>"
+    ]
+  ]
+}
 ];
+
 export const finalQuestions = [
   [
     [
@@ -366,5 +444,97 @@ export const finalQuestions = [
       ],
       1
     ]
+  ],
+[
+  [
+    "Was bezeichnet ein Bundle?",
+    [
+      "Eine Dateneinheit aus einer Modulausführung",
+      "Eine E-Mail-Adresse",
+      "Einen Benutzeraccount"
+    ],
+    0
+  ],
+  [
+    "Welche Werte lieferte Google Sheets im Beispiel?",
+    [
+      "Name, E-Mail und Anfrage",
+      "Nur ein Passwort",
+      "Nur ein Bild"
+    ],
+    0
+  ],
+  [
+    "Was bedeutet Mapping?",
+    [
+      "Dynamische Daten einem Zielfeld zuordnen",
+      "Ein Profilbild hochladen",
+      "Den Bildschirm vergrössern"
+    ],
+    0
+  ],
+  [
+    "Welche Variable kommt in das Gmail-Feld To?",
+    [
+      "Name (A)",
+      "E-Mail (B)",
+      "Anfrage (C)"
+    ],
+    1
+  ],
+  [
+    "Wozu dient Name (A) im Nachrichtentext?",
+    [
+      "Als persönliche Anrede",
+      "Als Zeitplan",
+      "Als Dateiname"
+    ],
+    0
+  ],
+  [
+    "Was bewirkt upper(\"max mustermann\")?",
+    [
+      "max mustermann",
+      "MAX MUSTERMANN",
+      "Max mustermann"
+    ],
+    1
+  ],
+  [
+    "Wozu dient trim()?",
+    [
+      "Zum Entfernen äusserer Leerzeichen",
+      "Zum Löschen aller Zeilen",
+      "Zur Übersetzung"
+    ],
+    0
+  ],
+  [
+    "Wird mit upper() im Subject auch die Originalzelle geändert?",
+    [
+      "Nein",
+      "Ja",
+      "Nur bei Gmail"
+    ],
+    0
+  ],
+  [
+    "Wieso war der Name im Nachrichtentext weiterhin klein?",
+    [
+      "upper() wurde dort nicht verwendet",
+      "Gmail hat den Text blockiert",
+      "Es gab keinen Trigger"
+    ],
+    0
+  ],
+  [
+    "Was hat unser Test tatsächlich gezeigt?",
+    [
+      "Eine Zustellung nach genau 15 Minuten",
+      "Erfolgreiche manuelle Run-once-Ausführung",
+      "Automatische Ausführung für jedes zukünftige Ereignis"
+    ],
+    1
   ]
+]
 ];
