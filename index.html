@@ -224,6 +224,34 @@ a { color:#6747d8; }
 </section>
 
 
+<section id="verifySection" class="auth-container" hidden>
+  <div class="auth-card">
+    <h2>E-Mail bestätigen</h2>
+    <p>
+      Wir haben dir eine Bestätigungs-E-Mail gesendet.
+      Öffne dein Postfach und klicke auf den Link.
+    </p>
+    <p><strong id="verifyEmail"></strong></p>
+
+    <button class="primary" id="checkEmail">
+      Ich habe meine E-Mail bestätigt
+    </button>
+
+    <button class="primary" id="resendEmail"
+      style="background:#64748b">
+      E-Mail erneut senden
+    </button>
+
+    <button class="primary" id="verifyLogout"
+      style="background:#334155">
+      Abmelden
+    </button>
+
+    <p id="verifyMessage" aria-live="polite"></p>
+  </div>
+</section>
+
+  
 <section id="authSection" class="auth-container" hidden>
   <div class="auth-card">
     <h2 id="authTitle">Willkommen zurück</h2>
@@ -515,6 +543,13 @@ a { color:#6747d8; }
 
     <button class="primary" type="submit">Antworten überprüfen</button>
   </form>
+
+<button type="button" id="forgotPassword">
+  Passwort vergessen?
+</button>
+<p id="resetMessage" aria-live="polite"></p>
+
+  
   <div id="result" class="result" aria-live="polite"></div>
 </section>
 
@@ -607,26 +642,63 @@ update();
 </script>
 
 
+
 <script type="module">
 import {
-  register, login, logout, watchAuth
+  register, login, logout, watchAuth,
+  resendVerification, checkVerification, resetPassword
 } from "./js/auth.js";
 
 const authSection = document.getElementById("authSection");
+const verifySection = document.getElementById("verifySection");
 const course = document.querySelector("main.container");
 const hero = document.querySelector(".hero");
 const form = document.getElementById("authForm");
 const error = document.getElementById("authError");
 const nameField = document.getElementById("nameField");
 const nameInput = document.getElementById("authName");
+const emailInput = document.getElementById("authEmail");
 const passwordInput = document.getElementById("authPassword");
+const verifyMessage = document.getElementById("verifyMessage");
 
 let registering = false;
+let currentUser = null;
+
+const logoutButton = document.createElement("button");
+logoutButton.type = "button";
+logoutButton.className = "primary";
+logoutButton.textContent = "Abmelden";
+logoutButton.onclick = logout;
+
+function renderUser(user) {
+  currentUser = user;
+  const verified = !!user?.emailVerified;
+
+  authSection.hidden = !!user;
+  verifySection.hidden = !user || verified;
+  course.hidden = !verified;
+  if (hero) hero.hidden = !verified;
+
+  if (user) {
+    document.getElementById("verifyEmail").textContent =
+      user.email || "";
+  }
+
+  if (verified) {
+    if (!logoutButton.isConnected) {
+      document.querySelector("header").appendChild(logoutButton);
+    }
+  } else {
+    logoutButton.remove();
+  }
+}
 
 document.getElementById("switchAuth").onclick = () => {
   registering = !registering;
+
   nameField.hidden = !registering;
   nameInput.required = registering;
+
   passwordInput.autocomplete =
     registering ? "new-password" : "current-password";
 
@@ -648,49 +720,95 @@ form.addEventListener("submit", async (event) => {
   event.preventDefault();
   error.textContent = "";
 
-  const email = document.getElementById("authEmail").value;
-  const password = passwordInput.value;
+  const submitButton = document.getElementById("authSubmit");
+  submitButton.disabled = true;
 
   try {
     if (registering) {
-      await register(nameInput.value.trim(), email, password);
+      await register(
+        nameInput.value.trim(),
+        emailInput.value.trim(),
+        passwordInput.value
+      );
     } else {
-      await login(email, password);
+      await login(
+        emailInput.value.trim(),
+        passwordInput.value
+      );
     }
     form.reset();
   } catch (err) {
-    const errors = {
-      "auth/email-already-in-use": "Diese E-Mail ist bereits registriert.",
-      "auth/invalid-email": "Ungültige E-Mail-Adresse.",
-      "auth/weak-password": "Das Passwort ist zu schwach.",
-      "auth/invalid-credential": "E-Mail oder Passwort ist falsch.",
-      "permission-denied": "Datenbankzugriff verweigert."
+    console.error(err);
+    const messages = {
+      "auth/email-already-in-use":
+        "Diese E-Mail ist bereits registriert.",
+      "auth/invalid-email":
+        "Ungültige E-Mail-Adresse.",
+      "auth/weak-password":
+        "Das Passwort ist zu schwach.",
+      "auth/invalid-credential":
+        "E-Mail oder Passwort ist falsch.",
+      "auth/too-many-requests":
+        "Zu viele Versuche. Bitte später erneut versuchen."
     };
-    error.textContent = errors[err.code] ||
-      "Ein Fehler ist aufgetreten: " + err.code;
+    error.textContent =
+      messages[err.code] || "Fehler: " + (err.code || err.message);
+  } finally {
+    submitButton.disabled = false;
   }
 });
 
-const logoutButton = document.createElement("button");
-logoutButton.textContent = "Abmelden";
-logoutButton.type = "button";
-logoutButton.className = "primary";
-logoutButton.onclick = logout;
+document.getElementById("forgotPassword").onclick = async () => {
+  const email = emailInput.value.trim();
 
-watchAuth((user) => {
-  authSection.hidden = !!user;
-  course.hidden = !user;
-  if (hero) hero.hidden = !user;
+  if (!email) {
+    document.getElementById("resetMessage").textContent =
+      "Bitte zuerst deine E-Mail-Adresse eingeben.";
+    return;
+  }
 
-  if (user) {
-    if (!logoutButton.isConnected) {
-      document.querySelector("header").appendChild(logoutButton);
+  try {
+    await resetPassword(email);
+    document.getElementById("resetMessage").textContent =
+      "Falls ein Konto existiert, erhältst du eine E-Mail.";
+  } catch (err) {
+    document.getElementById("resetMessage").textContent =
+      "Fehler: " + (err.code || err.message);
+  }
+};
+
+document.getElementById("checkEmail").onclick = async () => {
+  try {
+    const verified = await checkVerification();
+
+    if (verified) {
+      renderUser(currentUser);
+    } else {
+      verifyMessage.textContent =
+        "Noch nicht bestätigt. Bitte prüfe dein Postfach.";
     }
-  } else {
-    logoutButton.remove();
+  } catch (err) {
+    verifyMessage.textContent =
+      "Fehler: " + (err.code || err.message);
   }
-});
+};
+
+document.getElementById("resendEmail").onclick = async () => {
+  try {
+    await resendVerification();
+    verifyMessage.textContent =
+      "Bestätigungs-E-Mail wurde erneut gesendet.";
+  } catch (err) {
+    verifyMessage.textContent =
+      "Fehler: " + (err.code || err.message);
+  }
+};
+
+document.getElementById("verifyLogout").onclick = logout;
+
+watchAuth(renderUser);
 </script>
+
   
 
 </body>
