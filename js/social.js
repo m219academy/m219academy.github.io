@@ -3,23 +3,46 @@ import {doc,getDoc,runTransaction,setDoc,collection,query,where,getDocs} from 'h
 export const normalise = s => String(s||'').trim().toLowerCase();
 export const validUsername = s => /^[a-z0-9_]{3,20}$/.test(normalise(s));
 export const levelFor = xp => Math.floor(Math.max(0,xp)/100)+1;
-export async function claimUsername(uid,raw,previous='') {
- const name=normalise(raw),old=normalise(previous);
- if(!validUsername(name)) throw new Error('3–20 Zeichen: Buchstaben, Zahlen und _.');
- if(name===old) return name;
- const target=doc(db,'usernames',name),oldRef=old?doc(db,'usernames',old):null;
- const existing=await getDoc(target);
- if(existing.exists()&&existing.data().uid!==uid)throw new Error('Dieser Benutzername ist bereits vergeben.');
- await runTransaction(db,async tx=>{
-  const fresh=await tx.get(target);
-  if(fresh.exists()&&fresh.data().uid!==uid)throw new Error('Dieser Benutzername ist bereits vergeben.');
-  if(oldRef) {const previousSnap=await tx.get(oldRef);if(!previousSnap.exists()||previousSnap.data().uid!==uid)throw new Error('Alter Benutzername nicht gefunden.');}
-  if(!fresh.exists())tx.set(target,{uid});
-  if(oldRef)tx.delete(oldRef);
-  tx.set(doc(db,'users',uid),{username:name},{merge:true});
- });
- return name;
+
+export async function claimUsername(uid, raw, previous = '') {
+  const name = normalise(raw);
+
+  if (!validUsername(name)) {
+    throw new Error("Benutzername ungültig.");
+  }
+
+  const usernameRef = doc(db, "usernames", name);
+  const userRef = doc(db, "users", uid);
+
+  let existing;
+
+  try {
+    existing = await getDoc(usernameRef);
+  } catch (error) {
+    throw new Error("Username prüfen: " + error.message);
+  }
+
+  if (existing.exists()) {
+    if (existing.data().uid !== uid) {
+      throw new Error("Benutzername bereits vergeben.");
+    }
+  } else {
+    try {
+      await setDoc(usernameRef, { uid });
+    } catch (error) {
+      throw new Error("Username reservieren: " + error.message);
+    }
+  }
+
+  try {
+    await setDoc(userRef, { username: name }, { merge: true });
+  } catch (error) {
+    throw new Error("Profil speichern: " + error.message);
+  }
+
+  return name;
 }
+
 export async function publishPublic(uid,username,xp,avatar){
  if(!username)return;
  await setDoc(doc(db,'publicProfiles',uid),{username,level:levelFor(xp),xp,avatar:avatar||''},{merge:true});
