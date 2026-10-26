@@ -334,6 +334,83 @@ export const paths = [
       "<h3>Wissenscheck: Smart Workflow Logic</h3><p>Du kennst nun Filter, Textoperatoren, AND/OR, Router und die Fallback-Route. Bearbeite die <strong>10 Fragen</strong>. Ab <strong>8 richtigen Antworten</strong> ist LP4 bestanden.</p><p>Wiederholungen sind möglich, XP werden aber pro abgeschlossenem Wissenscheck und pro Lektion nur einmal gezählt.</p><p>Nach dem Abschluss wird LP5 freigeschaltet, sobald dessen Inhalte bereitstehen.</p>"
     ]
   ]
+},
+  {
+  "title": "Test & Automate: Dein Workflow im Einsatz",
+  "icon": "05",
+  "summary": "Run once, Scheduling, History, Credits und Fehlerbehebung verstehen.",
+  "lessons": [
+    [
+      "Szenarien richtig testen",
+      "Lerne, wie Run once funktioniert und woran du eine erfolgreiche Ausführung erkennst.",
+      "Bei Run once wird das Szenario einmal manuell gestartet.",
+      "Prüfe die grünen Häkchen und die verarbeiteten Module im Szenario.",
+      "Was macht Run once?",
+      [
+        "Es startet das Szenario einmal manuell",
+        "Es aktiviert automatisch tägliche Läufe",
+        "Es setzt alle Module zurück"
+      ],
+      0,
+      "<h3>Warum überhaupt testen?</h3><p>Bevor ein Szenario dauerhaft läuft, solltest du kontrollieren, ob alle Module richtig konfiguriert sind. Ein Test kann unerwartete Empfänger, falsche Feldzuordnungen und fehlende Daten sichtbar machen.</p><h3>Einmal ausführen: Run once</h3><p>Öffne dein Szenario im Editor. Trage in deinem Google Sheet eine neue Testzeile mit einer eigenen E-Mail-Adresse ein. Klicke danach auf <strong>Run once</strong>. Make liest die neuen Daten und übergibt sie an die weiteren Module, sofern die Bedingungen der Route erfüllt sind.</p><figure class=\"lesson-figure\"><img src=\"./assets/images/lp5-diagram.png\" loading=\"lazy\" alt=\"Dein Szenario mit Google Sheets, Router und zwei Gmail-Routen. Rechts sind Status und Verbrauch sichtbar.\"><figcaption>Dein Szenario mit Google Sheets, Router und zwei Gmail-Routen. Rechts sind Status und Verbrauch sichtbar.</figcaption></figure><h3>Was bedeuten die grünen Markierungen?</h3><p>Ein grünes Häkchen zeigt, dass das jeweilige Modul erfolgreich ausgeführt wurde. Das heisst nicht zwingend, dass in jedem Durchlauf eine E-Mail gesendet wurde. Wenn keine neue Zeile gefunden wird, kann das Szenario ohne anschliessende Gmail-Aktion enden.</p><div class=\"task\"><strong>Praxis</strong><p>Teste ausschliesslich mit deiner eigenen E-Mail-Adresse. Notiere, welcher Zweig ausgeführt wurde und ob die E-Mail tatsächlich im Postfach eingetroffen ist.</p></div>"
+    ],
+    [
+      "Scheduling: automatisch statt manuell",
+      "Verstehe den Unterschied zwischen manuellen Tests und geplanten Durchläufen.",
+      "Eine aktive Planung kann das Szenario regelmässig starten.",
+      "Finde die Einstellung Every 15 minutes und die Optionen für einmalig, täglich oder wöchentlich.",
+      "Welche Einstellung ist für wiederholte automatische Ausführungen gedacht?",
+      [
+        "Run once",
+        "At regular intervals",
+        "Scenario name"
+      ],
+      1,
+      "<h3>Was bedeutet Scheduling?</h3><p>Mit dem <strong>Scheduling</strong> legst du fest, wann Make ein Szenario startet. Bei Google Sheets «Watch New Rows» prüft Make beispielsweise in bestimmten Abständen, ob neue Tabellenzeilen vorhanden sind.</p><figure class=\"lesson-figure\"><img src=\"./assets/images/lp5-schedule.png\" loading=\"lazy\" alt=\"Schedule settings: At regular intervals, Once, Daily, Weekdays, Weekly, Monthly, Specified dates und On demand.\"><figcaption>Schedule settings: At regular intervals, Once, Daily, Weekdays, Weekly, Monthly, Specified dates und On demand.</figcaption></figure><h3>Häufige Einstellungen</h3><p><strong>At regular intervals</strong> wiederholt die Prüfung nach einem gewählten Zeitabstand. <strong>Once</strong> ist für eine geplante einmalige Ausführung gedacht. <strong>Daily</strong>, <strong>Weekly</strong> oder <strong>Monthly</strong> legen passende wiederkehrende Zeitpunkte fest. <strong>On demand</strong> startet nicht automatisch nach einem Zeitplan.</p><h3>Active und Inactive</h3><p>Steht dein Szenario auf <strong>Inactive</strong>, läuft die geplante Ausführung nicht. Wenn du es aktivierst, kann Make gemäss Zeitplan neue Daten prüfen. Die tatsächliche Frequenz hängt von deinem Plan und den gewählten Einstellungen ab.</p><div class=\"notice\"><strong>Aus unserer Praxis</strong><p>Im Szenario war «Every 15 minutes» konfiguriert. Der Screenshot aus der History zeigt ausserdem Läufe mit «Schedule» und «Success». Die Versuche mit Gmail wurden zusätzlich manuell über «Run once» getestet.</p></div>"
+    ],
+    [
+      "History, Credits und Operations",
+      "Lerne, wie du ausgeführte Szenarien nachvollziehst und ihren Verbrauch liest.",
+      "In der History stehen Zeit, Startart und Status der vergangenen Durchläufe.",
+      "Vergleiche in History einen Manual run mit einem Schedule-Lauf.",
+      "Was bedeutet die Angabe Manual run?",
+      [
+        "Das Szenario wurde manuell gestartet",
+        "Der Workflow wurde gelöscht",
+        "Die Verbindung ist abgelaufen"
+      ],
+      0,
+      "<h3>Warum ist die History wichtig?</h3><p>Unter <strong>History</strong> kannst du frühere Ausführungen prüfen. Das ist besonders hilfreich, wenn eine E-Mail nicht angekommen ist oder du wissen möchtest, wann ein Szenario zuletzt gelaufen ist.</p><figure class=\"lesson-figure\"><img src=\"./assets/images/lp5-history.png\" loading=\"lazy\" alt=\"History: Manual run, Schedule, Scenario edited und die Statusanzeige Success im selben Verlauf.\"><figcaption>History: Manual run, Schedule, Scenario edited und die Statusanzeige Success im selben Verlauf.</figcaption></figure><h3>Manual run und Schedule erkennen</h3><p>In unserer History siehst du sowohl manuelle Tests als auch geplante Ausführungen. <strong>Success</strong> bedeutet, dass der jeweilige Durchlauf erfolgreich abgeschlossen wurde. Prüfe zusätzlich die Laufdetails, um zu sehen, welche Module tatsächlich aktiv waren.</p><figure class=\"lesson-figure\"><img src=\"./assets/images/lp5-run-details.png\" loading=\"lazy\" alt=\"Ein erfolgreicher manueller Lauf mit 1 Operation und ohne Gmail-Ausführung: nicht jeder erfolgreiche Lauf sendet eine E-Mail.\"><figcaption>Ein erfolgreicher manueller Lauf mit 1 Operation und ohne Gmail-Ausführung: nicht jeder erfolgreiche Lauf sendet eine E-Mail.</figcaption></figure><h3>Operations, Credits und Datentransfer</h3><p>Make zeigt für Durchläufe unter anderem ausgeführte <strong>Operations</strong>, den Verbrauch an <strong>Credits</strong> und die übertragene Datenmenge an. Diese Werte helfen dir, Nutzung und mögliche Tarifgrenzen einzuschätzen. Wie Credits genau abgerechnet werden, hängt von den verwendeten Funktionen und dem Make-Tarif ab.</p><div class=\"task\"><strong>Praxis</strong><p>Öffne einen erfolgreichen Verlaufseintrag und finde Startzeit, Trigger, Dauer, Operations und Status. Prüfe, ob beide Gmail-Module oder nur der Google-Sheets-Trigger ausgeführt wurden.</p></div>"
+    ],
+    [
+      "Fehler und unvollständige Ausführungen",
+      "Erkenne häufige Fehler und verstehe die Übersicht Incomplete Executions.",
+      "Nicht jede erfolgreiche Ausführung verarbeitet eine neue Tabellenzeile.",
+      "Prüfe die Ansicht Incomplete Executions und überlege dir drei mögliche Fehlerquellen.",
+      "Was bedeutet No items found unter Incomplete Executions?",
+      [
+        "Es gibt keine dort aufgelisteten unvollständigen Ausführungen",
+        "Alle bisherigen E-Mails wurden gelöscht",
+        "Alle Verbindungen sind ungültig"
+      ],
+      0,
+      "<h3>Typische Fehlerquellen</h3><p>Fehler können auftreten, wenn eine Verbindung ihre Berechtigung verliert, das ausgewählte Spreadsheet nicht mehr existiert, ein erforderliches Feld leer bleibt oder ein Modul die Daten nicht im erwarteten Format erhält.</p><h3>Wie gehst du bei Problemen vor?</h3><ol><li>Öffne die <strong>History</strong> und suche den betreffenden Durchlauf.</li><li>Prüfe den Status sowie die Ausführungsdetails und Fehlermeldungen.</li><li>Kontrolliere die Verbindung, die Modul-Konfiguration und die Werte aus Google Sheets.</li><li>Korrigiere den Fehler und teste mit <strong>Run once</strong> erneut.</li></ol><figure class=\"lesson-figure\"><img src=\"./assets/images/lp5-incomplete.png\" loading=\"lazy\" alt=\"Incomplete Executions zeigt in unserem Test «No items found». Es wurden dort keine Einträge angezeigt.\"><figcaption>Incomplete Executions zeigt in unserem Test «No items found». Es wurden dort keine Einträge angezeigt.</figcaption></figure><h3>Incomplete Executions</h3><p>Diese Übersicht kann unvollständige Ausführungen anzeigen, sofern deren Speicherung entsprechend konfiguriert ist. Ob du einen fehlerhaften Lauf wieder aufnehmen kannst, hängt von den Einstellungen und vom Fehler ab. Ein leerer Bildschirm belegt deshalb nicht, dass ein Szenario niemals einen Fehler hatte.</p><div class=\"notice\"><strong>Merke</strong><p>Verändere nicht absichtlich eine echte Verbindung, nur um einen Fehler zu erzeugen. Für den Lernpfad genügt es, die Ursachen und die Prüfschritte zu verstehen.</p></div>"
+    ],
+    [
+      "Abschlussquiz: Automation Expert",
+      "Zeige in zehn Fragen, dass du Workflows testen und überwachen kannst.",
+      "Mit mindestens 8 richtigen Antworten ist LP5 bestanden und der Kurs abgeschlossen.",
+      "Beantworte alle Fragen und schliesse deinen fünften Lernpfad ab.",
+      "Welche Aussage über Success ist korrekt?",
+      [
+        "Success garantiert immer eine verschickte E-Mail",
+        "Success sagt aus, dass der Lauf erfolgreich abgeschlossen wurde",
+        "Success bedeutet eine unbeschränkte Anzahl Credits"
+      ],
+      1,
+      "<h3>Dein letzter Wissenscheck</h3><p>Du hast in den fünf Lernpfaden gelernt, Make zu bedienen, ein Szenario aufzubauen, Daten zuzuordnen, mit Filtern unterschiedliche Wege zu wählen und Ausführungen zu überprüfen.</p><p>Beantworte jetzt die <strong>10 Abschlussfragen</strong>. Mit mindestens <strong>8 richtigen Antworten</strong> bestehst du LP5 und schliesst damit den gesamten Kurs der M219 Academy ab.</p><div class=\"notice\"><strong>Geschafft?</strong><p>Der Kursabschluss wird in deinem Lernfortschritt gespeichert. Ein personalisiertes Zertifikat ergänzen wir später als eigene Funktion.</p></div>"
+    ]
+  ]
 }
 ];
 
@@ -702,6 +779,98 @@ export const finalQuestions = [
       "Eine erfolgreiche Run-once-Ausführung der Reklamationsroute",
       "Die automatische Ausführung nach genau 15 Minuten",
       "Den vollständigen Test beider Routen"
+    ],
+    0
+  ]
+],
+  [
+  [
+    "Wofür ist Run once gedacht?",
+    [
+      "Für eine manuelle Testausführung",
+      "Um den Tarif zu kündigen",
+      "Um die Anmeldung zu ändern"
+    ],
+    0
+  ],
+  [
+    "Was prüft Watch New Rows?",
+    [
+      "Neue Zeilen in der gewählten Tabelle",
+      "Neue Browser-Tabs",
+      "Das Passwort"
+    ],
+    0
+  ],
+  [
+    "Was bedeutet Active in Verbindung mit Scheduling?",
+    [
+      "Geplante Ausführungen sind aktiviert",
+      "Alle E-Mails sind angekommen",
+      "Der Router wird deaktiviert"
+    ],
+    0
+  ],
+  [
+    "Welche Option wiederholt eine Ausführung nach einem Zeitintervall?",
+    [
+      "Once",
+      "At regular intervals",
+      "Rename scenario"
+    ],
+    1
+  ],
+  [
+    "Wie erkennst du einen manuell gestarteten Verlaufseintrag?",
+    [
+      "Manual run",
+      "Scheduled monthly",
+      "Sign out"
+    ],
+    0
+  ],
+  [
+    "Was bedeutet Success?",
+    [
+      "Ein Lauf wurde erfolgreich abgeschlossen",
+      "Jeder Gmail-Zweig wurde immer ausgeführt",
+      "Es gab mindestens 100 Zeilen"
+    ],
+    0
+  ],
+  [
+    "Wo prüfst du vergangene Durchläufe?",
+    [
+      "Templates",
+      "History",
+      "My Plan"
+    ],
+    1
+  ],
+  [
+    "Was zeigt die Angabe Operations an?",
+    [
+      "Ausgeführte Verarbeitungsschritte im Lauf",
+      "Die Anzahl registrierter Nutzer",
+      "Die Zahl der gespeicherten Passwörter"
+    ],
+    0
+  ],
+  [
+    "Was sagt No items found unter Incomplete Executions aus?",
+    [
+      "Es sind dort aktuell keine unvollständigen Ausführungen aufgeführt",
+      "Das Szenario hat garantiert niemals einen Fehler gehabt",
+      "Das Konto wurde gelöscht"
+    ],
+    0
+  ],
+  [
+    "Was solltest du bei einer fehlgeschlagenen E-Mail zuerst tun?",
+    [
+      "Die History und die Modul-Einstellungen prüfen",
+      "Sofort alle Module entfernen",
+      "Ungeprüft zehnmal Run once starten"
     ],
     0
   ]
