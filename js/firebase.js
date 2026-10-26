@@ -10,14 +10,14 @@ import {
 } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-firestore.js";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBnvisT7B6wfF-MDD3VGy8b5qEzL3G6BQ",
+  apiKey: "AIzaSyBnvisT7B6wfF-MD0D3VGy8b5qEzL3G6BQ",
   authDomain: "m219-academy.firebaseapp.com",
   projectId: "m219-academy",
   storageBucket: "m219-academy.firebasestorage.app",
   messagingSenderId: "651770396939",
-  appId: "1:651770396939:web:e0dfa7ebb69df1356ea20e"
+  appId: "1:651770396939:web:e0dfa7ebb69df1356ea20e",
+  measurementId: "G-WT28HT66N3"
 };
-
 const app = initializeApp(firebaseConfig);
 
 export const auth = getAuth(app);
