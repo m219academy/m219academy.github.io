@@ -605,5 +605,93 @@ function grade(event) {
 
 update();
 </script>
+
+
+<script type="module">
+import {
+  register, login, logout, watchAuth
+} from "./js/auth.js";
+
+const authSection = document.getElementById("authSection");
+const course = document.querySelector("main.container");
+const hero = document.querySelector(".hero");
+const form = document.getElementById("authForm");
+const error = document.getElementById("authError");
+const nameField = document.getElementById("nameField");
+const nameInput = document.getElementById("authName");
+const passwordInput = document.getElementById("authPassword");
+
+let registering = false;
+
+document.getElementById("switchAuth").onclick = () => {
+  registering = !registering;
+  nameField.hidden = !registering;
+  nameInput.required = registering;
+  passwordInput.autocomplete =
+    registering ? "new-password" : "current-password";
+
+  document.getElementById("authTitle").textContent =
+    registering ? "Konto erstellen" : "Willkommen zurück";
+
+  document.getElementById("authSubmit").textContent =
+    registering ? "Registrieren" : "Anmelden";
+
+  document.getElementById("switchAuth").textContent =
+    registering
+      ? "Bereits ein Konto? Anmelden"
+      : "Noch kein Konto? Registrieren";
+
+  error.textContent = "";
+};
+
+form.addEventListener("submit", async (event) => {
+  event.preventDefault();
+  error.textContent = "";
+
+  const email = document.getElementById("authEmail").value;
+  const password = passwordInput.value;
+
+  try {
+    if (registering) {
+      await register(nameInput.value.trim(), email, password);
+    } else {
+      await login(email, password);
+    }
+    form.reset();
+  } catch (err) {
+    const errors = {
+      "auth/email-already-in-use": "Diese E-Mail ist bereits registriert.",
+      "auth/invalid-email": "Ungültige E-Mail-Adresse.",
+      "auth/weak-password": "Das Passwort ist zu schwach.",
+      "auth/invalid-credential": "E-Mail oder Passwort ist falsch.",
+      "permission-denied": "Datenbankzugriff verweigert."
+    };
+    error.textContent = errors[err.code] ||
+      "Ein Fehler ist aufgetreten: " + err.code;
+  }
+});
+
+const logoutButton = document.createElement("button");
+logoutButton.textContent = "Abmelden";
+logoutButton.type = "button";
+logoutButton.className = "primary";
+logoutButton.onclick = logout;
+
+watchAuth((user) => {
+  authSection.hidden = !!user;
+  course.hidden = !user;
+  if (hero) hero.hidden = !user;
+
+  if (user) {
+    if (!logoutButton.isConnected) {
+      document.querySelector("header").appendChild(logoutButton);
+    }
+  } else {
+    logoutButton.remove();
+  }
+});
+</script>
+  
+
 </body>
 </html>
