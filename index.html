@@ -184,6 +184,41 @@ a { color:#6747d8; }
   <p>4 Lektionen | Ca. 25 Minuten | Quiz und Übungen</p>
 </section>
 
+
+<section id="authSection" class="auth-container" hidden>
+  <div class="auth-card">
+    <h2 id="authTitle">Willkommen zurück</h2>
+    <p>Melde dich bei M219 Academy an.</p>
+
+    <form id="authForm">
+      <div id="nameField" hidden>
+        <label for="authName">Dein Name</label>
+        <input id="authName" type="text" autocomplete="name">
+      </div>
+
+      <label for="authEmail">E-Mail</label>
+      <input id="authEmail" type="email"
+             autocomplete="email" required>
+
+      <label for="authPassword">Passwort</label>
+      <input id="authPassword" type="password"
+             autocomplete="current-password"
+             minlength="6" required>
+
+      <button class="primary" type="submit" id="authSubmit">
+        Anmelden
+      </button>
+    </form>
+
+    <p id="authError" role="alert"></p>
+
+    <button type="button" id="switchAuth">
+      Noch kein Konto? Registrieren
+    </button>
+  </div>
+</section>
+  
+  
 <main class="container">
 <div class="layout">
 
